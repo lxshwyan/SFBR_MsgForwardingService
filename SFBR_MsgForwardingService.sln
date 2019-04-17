@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBR_MsgForwardingService", "SFBR_MsgForwardingService\SFBR_MsgForwardingService.csproj", "{96045B2A-EBFC-44FC-9D81-4774B7C8FEFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRWebDemo", "SignalRWebDemo\SignalRWebDemo.csproj", "{13650B6E-AA03-4E42-8587-F8E295851158}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96045B2A-EBFC-44FC-9D81-4774B7C8FEFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96045B2A-EBFC-44FC-9D81-4774B7C8FEFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96045B2A-EBFC-44FC-9D81-4774B7C8FEFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96045B2A-EBFC-44FC-9D81-4774B7C8FEFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13650B6E-AA03-4E42-8587-F8E295851158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13650B6E-AA03-4E42-8587-F8E295851158}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13650B6E-AA03-4E42-8587-F8E295851158}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13650B6E-AA03-4E42-8587-F8E295851158}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C788FD0F-B63F-4504-8632-2777503D1BD4}
+	EndGlobalSection
+EndGlobal
