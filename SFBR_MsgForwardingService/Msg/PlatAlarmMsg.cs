@@ -40,7 +40,7 @@ namespace SFBR_MsgForwardingService.Msg
         {
             try
             {
-                socket = new SocketMessageMng(port);
+                socket = new SocketMessageMng(port);  
                 socket.UdpStartListen();
                 socket.SetTextEvent += Socket_SetTextEvent;  
                 logger.Info("Udp初始化成功：{0}", port);   
@@ -58,58 +58,65 @@ namespace SFBR_MsgForwardingService.Msg
             {
                 return;
             }
-            var hub = GlobalHost.ConnectionManager.GetHubContext<MsgHub>();
-              hub.Clients.All.allInfo(msg);
-         
-            switch (msg.Substring(0, 2))
+            SendInfo(msg);
+           
+        }
+        public void SendInfo(string msg)
+        {
+           var hub = GlobalHost.ConnectionManager.GetHubContext<MsgHub>();
+            hub.Clients.All.allInfo(msg);
+            switch (msg.Substring(0, 2).ToUpper())
             {
                 case "BJ"://刷新
                     {
-                        hub.Clients.All.AlarmInfo(msg);
+                        hub.Clients.All.alarmInfo(msg);
                         break;
                     }
 
                 case "MJ":
                     {
-                        hub.Clients.All.MJInfo(msg);
+                        hub.Clients.All.mjInfo(msg);
                         break;
                     }
                 case "Do":
                     {
-                        hub.Clients.All.DoInfo(msg);
+                        hub.Clients.All.doInfo(msg);
                         break;
                     }
                 case "CL":
                     {
-                        hub.Clients.All.CLInfo(msg);
+                        hub.Clients.All.clInfo(msg);
                     }
                     break;
                 case "FK":
                     {
-                        hub.Clients.All.FKInfo(msg);
+                        hub.Clients.All.fkInfo(msg);
                         break;
                     }
                 case "DW":
                     {
-                        hub.Clients.All.DWInfo(msg);
+                        hub.Clients.All.dwInfo(msg);
                         break;
                     }
                 case "DC":
                     {
-                        hub.Clients.All.DCInfo(msg);
+                        hub.Clients.All.dcInfo(msg);
                         break;
                     }
                 case "DU":
-                    hub.Clients.All.DUInfo(msg);
+                    hub.Clients.All.duInfo(msg);
                     break;
                 case "DR":
-                    hub.Clients.All.DRInfo(msg);
+                    hub.Clients.All.drInfo(msg);
                     break;
                 case "RC":
-                    hub.Clients.All.RCInfo(msg);
+                    hub.Clients.All.rcInfo(msg);
                     break;
                 case "QT":
-                    hub.Clients.All.QTInfo(msg);
+                    hub.Clients.All.qtInfo(msg);
+                    break;
+                case "QD":
+                    hub.Clients.All.qdInfo(msg);
                     break;
                 default:
                     {
