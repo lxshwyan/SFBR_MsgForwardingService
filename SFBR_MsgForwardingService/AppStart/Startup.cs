@@ -27,8 +27,11 @@ namespace SFBR_MsgForwardingService
 {
 
     public class Startup
-    {   
-        public  Logger logger = LogManager.GetLogger(nameof(PlatAlarmMsg));
+    {
+      
+        public string SinalRUrl { get; set; } ="http://localhost:6178";
+        public int LinsenPort { get; set; } = 8893;
+        public  Logger logger = LogManager.GetLogger(nameof(Startup));
         private  void InitSinalR(string SignalRURI = "http://localhost:6178")
         {
             try
@@ -68,16 +71,38 @@ namespace SFBR_MsgForwardingService
                 Console.ReadLine();
             }
         }
-      
-      
+
+        private void ReadConfig()
+        {
+
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SinalRUrl"]))
+                {
+                    SinalRUrl = System.Configuration.ConfigurationManager.AppSettings["SinalRUrl"].ToString();
+                }
+                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["LinsenPort"]))
+                {
+                    LinsenPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["LinsenPort"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex,"读取参数错误");
+                
+            }
+            
+
+        }
         /// <summary>
         ///  开启服务
         /// </summary>
         public void Start()
-        {  
-             PlatAlarmMsg._Instace.InitUdp(); 
+        {
+            ReadConfig();
+             PlatAlarmMsg._Instace.InitUdp(LinsenPort); 
 
-             InitSinalR();
+             InitSinalR(SinalRUrl);
 
          
         }
