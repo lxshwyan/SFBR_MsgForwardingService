@@ -15,7 +15,7 @@
 using SFBR_MsgForwardingService.Hub;
 using System;
 using System.Reflection;
-using System.Threading;  
+using System.Threading;
 using Microsoft.AspNet.SignalR;
 using Owin;
 using Microsoft.Owin.Cors;
@@ -28,11 +28,13 @@ namespace SFBR_MsgForwardingService
 
     public class Startup
     {
-      
-        public string SinalRUrl { get; set; } ="http://localhost:6178";
+
+        public string SinalRUrl { get; set; } = "http://localhost:8893";
         public int LinsenPort { get; set; } = 8893;
-        public  Logger logger = LogManager.GetLogger(nameof(Startup));
-        private  void InitSinalR(string SignalRURI = "http://localhost:6178")
+        public int ABDoorPort { get; set; } = 8887;
+
+        public Logger logger = LogManager.GetLogger(nameof(Startup));
+        private void InitSinalR(string SignalRURI = "http://localhost:8893")
         {
             try
             {
@@ -41,33 +43,33 @@ namespace SFBR_MsgForwardingService
                     using (WebApp.Start(SignalRURI, builder =>
                     {
                         builder.Map("/signalr", map =>
-                        {  
-                            map.UseCors(CorsOptions.AllowAll);
+                        {
+                            map.UseCors(CorsOptions.AllowAll);   //运行跨域
                             var hubConfiguration = new HubConfiguration
-                            { 
+                            {
                                 EnableJSONP = true
-                            };  
+                            };
                             map.RunSignalR(hubConfiguration);
                         });
                         builder.MapSignalR();
 
                     }))
-                    {    
+                    {
                         logger.Info("服务开启成功,运行在{0}", SignalRURI + "/signalr");
                         Console.ReadLine();
                     }
                 }
                 catch (TargetInvocationException)
                 {
-                    
-                   logger.Info("服务开启失败. 已经有一个服务运行在{0}", SignalRURI);
+
+                    logger.Info("服务开启失败. 已经有一个服务运行在{0}", SignalRURI);
                     Console.ReadLine();
                 }
             }
             catch (Exception ex)
             {
                 logger.Info("服务开启异常：{0}", ex.ToString());
-              
+
                 Console.ReadLine();
             }
         }
@@ -85,13 +87,17 @@ namespace SFBR_MsgForwardingService
                 {
                     LinsenPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["LinsenPort"].ToString());
                 }
+                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["ABDoorPort"]))
+                {
+                    ABDoorPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ABDoorPort"].ToString());
+                }
             }
             catch (Exception ex)
             {
-                logger.Error(ex,"读取参数错误");
-                
+                logger.Error(ex, "读取参数错误");
+
             }
-            
+
 
         }
         /// <summary>
@@ -100,11 +106,12 @@ namespace SFBR_MsgForwardingService
         public void Start()
         {
             ReadConfig();
-             PlatAlarmMsg._Instace.InitUdp(LinsenPort); 
+            PlatAlarmMsg._Instace.InitUdp(LinsenPort);
+            ABDoorMsg._Instace.InitUdp(ABDoorPort);
 
-             InitSinalR(SinalRUrl);
+            InitSinalR(SinalRUrl);
 
-         
+
         }
         /// <summary>
         /// 停止服务
@@ -113,7 +120,7 @@ namespace SFBR_MsgForwardingService
         {
 
             PlatAlarmMsg._Instace.Dis();
-             logger.Info("已停止服务");
+            logger.Info("已停止服务");
         }
     }
 }
