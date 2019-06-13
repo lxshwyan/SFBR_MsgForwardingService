@@ -29,8 +29,8 @@ namespace SFBR_MsgForwardingService
     public class Startup
     {
 
-        public string SinalRUrl { get; set; } = "http://localhost:8893";
-        public int LinsenPort { get; set; } = 8893;
+        public string SignalRUrl { get; set; } = "http://localhost:8893";
+        public int ListenPort { get; set; } = 8893;
         public int ABDoorPort { get; set; } = 8887;
 
         public Logger logger = LogManager.GetLogger(nameof(Startup));
@@ -79,13 +79,13 @@ namespace SFBR_MsgForwardingService
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SinalRUrl"]))
+                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SignalRUrl"]))
                 {
-                    SinalRUrl = System.Configuration.ConfigurationManager.AppSettings["SinalRUrl"].ToString();
+                    SignalRUrl = System.Configuration.ConfigurationManager.AppSettings["SignalRUrl"].ToString();
                 }
-                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["LinsenPort"]))
+                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["ListenPort"]))
                 {
-                    LinsenPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["LinsenPort"].ToString());
+                    ListenPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ListenPort"].ToString());
                 }
                 if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["ABDoorPort"]))
                 {
@@ -106,10 +106,10 @@ namespace SFBR_MsgForwardingService
         public void Start()
         {
             ReadConfig();
-            PlatAlarmMsg._Instace.InitUdp(LinsenPort);
+            PlatAlarmMsg._Instace.InitUdp(ListenPort);
             ABDoorMsg._Instace.InitUdp(ABDoorPort);
 
-            InitSinalR(SinalRUrl);
+            InitSinalR(SignalRUrl);
 
 
         }
