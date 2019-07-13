@@ -17,7 +17,7 @@ namespace SFBR_MsgForwardingService.Hub
 
         public void Hello(string msg)
         {
-            
+           // Console.WriteLine($"当前在线一共{dictionary.Count}个连接");
             this.Clients.All.Welcome($"当前在线一共{dictionary.Count}个连接");
         }
         /// <summary>
@@ -28,18 +28,17 @@ namespace SFBR_MsgForwardingService.Hub
         public void Send(string name, string message)
         {
             //调用所有客户注册的本地的JS方法(addMessage)
-            Clients.All.addMessage(name, message);
-         
+            Clients.All.addMessage(name, message);   
         }
         public void SendAll(string name, string message)
         {
-             //调用所有客户注册的本地的JS方法(addMessage)
+           //调用所有客户注册的本地的JS方法(addMessage)
            Clients.All.allInfo(message);
         }
         public override Task OnConnected()
         {
             dictionary.TryAdd(this.Context.ConnectionId, DateTime.Now.ToString());
-
+            Console.WriteLine($"当前在线一共{dictionary.Count}个连接");   
             return base.OnConnected();
         }
 

@@ -29,10 +29,10 @@ namespace SFBR_MsgForwardingService
     public class Startup
     {
       
-        public string SinalRUrl { get; set; } ="http://localhost:6178";
+        public string SinalRUrl { get; set; } ="http://localhost:8893";
         public int LinsenPort { get; set; } = 8893;
         public  Logger logger = LogManager.GetLogger(nameof(Startup));
-        private  void InitSinalR(string SignalRURI = "http://localhost:6178")
+        private  void InitSinalR(string SignalRURI = "http://localhost:8893")
         {
             try
             {
@@ -42,7 +42,7 @@ namespace SFBR_MsgForwardingService
                     {
                         builder.Map("/signalr", map =>
                         {  
-                            map.UseCors(CorsOptions.AllowAll);
+                            map.UseCors(CorsOptions.AllowAll);   //运行跨域
                             var hubConfiguration = new HubConfiguration
                             { 
                                 EnableJSONP = true
@@ -99,7 +99,7 @@ namespace SFBR_MsgForwardingService
         /// </summary>
         public void Start()
         {
-            ReadConfig();
+             ReadConfig();
              PlatAlarmMsg._Instace.InitUdp(LinsenPort); 
 
              InitSinalR(SinalRUrl);

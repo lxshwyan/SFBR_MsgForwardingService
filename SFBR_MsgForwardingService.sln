@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBR_MsgForwardingService",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRWebDemo", "SignalRWebDemo\SignalRWebDemo.csproj", "{13650B6E-AA03-4E42-8587-F8E295851158}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRConsole", "SignalRConsole\SignalRConsole.csproj", "{07AFE6C3-A026-44A1-8A4F-8A341A932D42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{13650B6E-AA03-4E42-8587-F8E295851158}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13650B6E-AA03-4E42-8587-F8E295851158}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13650B6E-AA03-4E42-8587-F8E295851158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07AFE6C3-A026-44A1-8A4F-8A341A932D42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07AFE6C3-A026-44A1-8A4F-8A341A932D42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07AFE6C3-A026-44A1-8A4F-8A341A932D42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07AFE6C3-A026-44A1-8A4F-8A341A932D42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
