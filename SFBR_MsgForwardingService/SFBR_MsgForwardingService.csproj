@@ -89,7 +89,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppStart\Startup.cs" />
+    <Compile Include="DoorMessage.cs" />
     <Compile Include="Hub\MsgHub.cs" />
+    <Compile Include="Msg\ABDoorMsg.cs" />
     <Compile Include="Msg\PlatAlarmMsg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
