@@ -26,15 +26,10 @@ namespace SFBR_MsgForwardingService
             get { return m_SocketType; }
             set { m_SocketType = value; }
         }
-        private string m_SocketHomeIP = "255.255.255.255";
         /// <summary>
         /// 监听IP
         /// </summary>
-        public string SocketHomeIP
-        {
-            get { return m_SocketHomeIP; }
-            set { m_SocketHomeIP = value; }
-        }
+        public string SocketHomeIP { get; set; } = "255.255.255.255";
 
         private int m_SocketPort = 8888;
         /// <summary>
@@ -182,7 +177,7 @@ namespace SFBR_MsgForwardingService
             }
             catch (Exception ef)
             {
-              
+
             }
         }
 
@@ -267,13 +262,14 @@ namespace SFBR_MsgForwardingService
         /// </summary>
         private void UdpListener()
         {
-            try
-            {
-                string Msg = "";
+            string Msg = "";
 
-                while (IsStart)
+            while (IsStart)
+            {
+                try
                 {
-                    Byte[] receiveBytes = udpCli.Receive(ref ipEnd);
+
+                    byte[] receiveBytes = udpCli.Receive(ref ipEnd);
                     if (m_SocketType == "1")
                     {
                         Msg = Encoding.Default.GetString(receiveBytes);
@@ -289,10 +285,10 @@ namespace SFBR_MsgForwardingService
 
                     this.Sendtxt.Invoke(Msg);
                 }
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
 
+                }
             }
         }
         /// <summary>   

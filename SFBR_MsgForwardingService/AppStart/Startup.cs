@@ -29,12 +29,12 @@ namespace SFBR_MsgForwardingService
     public class Startup
     {
 
-        public string SinalRUrl { get; set; } = "http://localhost:8893";
-        public int LinsenPort { get; set; } = 8893;
+        public string SignalRUrl { get; set; } = "http://192.168.137.171:8893";
+        public int ListenPort { get; set; } = 8893;
         public int ABDoorPort { get; set; } = 8887;
 
         public Logger logger = LogManager.GetLogger(nameof(Startup));
-        private void InitSinalR(string SignalRURI = "http://localhost:8893")
+        private void InitSinalR(string SignalRURI = "http://192.168.137.171:8893")
         {
             try
             {
@@ -79,13 +79,13 @@ namespace SFBR_MsgForwardingService
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SinalRUrl"]))
+                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SignalRUrl"]))
                 {
-                    SinalRUrl = System.Configuration.ConfigurationManager.AppSettings["SinalRUrl"].ToString();
+                    SignalRUrl = System.Configuration.ConfigurationManager.AppSettings["SignalRUrl"].ToString();
                 }
-                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["LinsenPort"]))
+                if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["ListenPort"]))
                 {
-                    LinsenPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["LinsenPort"].ToString());
+                    ListenPort = int.Parse(System.Configuration.ConfigurationManager.AppSettings["ListenPort"].ToString());
                 }
                 if (!string.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["ABDoorPort"]))
                 {
@@ -106,10 +106,10 @@ namespace SFBR_MsgForwardingService
         public void Start()
         {
             ReadConfig();
-            PlatAlarmMsg._Instace.InitUdp(LinsenPort);
-            ABDoorMsg._Instace.InitUdp(ABDoorPort);
+            PlatAlarmMsg._Instace.InitUdp(ListenPort, "平台和清点消息");
+            ABDoorMsg._Instace.InitUdp(ABDoorPort, "AB相关消息");
 
-            InitSinalR(SinalRUrl);
+            InitSinalR(SignalRUrl);
 
 
         }
@@ -118,8 +118,8 @@ namespace SFBR_MsgForwardingService
         /// </summary>
         public void Stop()
         {
-
             PlatAlarmMsg._Instace.Dis();
+            ABDoorMsg._Instace.Dis();
             logger.Info("已停止服务");
         }
     }

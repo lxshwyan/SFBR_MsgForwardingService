@@ -22,46 +22,29 @@ using System.Threading.Tasks;
 
 namespace SFBR_MsgForwardingService.Msg
 {
-    public class PlatAlarmMsg
+    public class PlatAlarmMsg : BaseMsg<PlatAlarmMsg>
     {
-        public static PlatAlarmMsg _Instace;
-        public Logger logger = LogManager.GetLogger(nameof(PlatAlarmMsg));
-        static PlatAlarmMsg()
+        public PlatAlarmMsg()
         {
-            _Instace = new PlatAlarmMsg();
+            logger = LogManager.GetLogger(nameof(PlatAlarmMsg));
         }
-        private PlatAlarmMsg() { }
-        private SocketMessageMng socket;
         /// <summary>
         /// 实例化转化发消息
         /// </summary>
         /// <param name="port"></param>
-        public void InitUdp(int port = 8893)
+        public override void InitUdp(int port = 8893, string desc = "")
         {
-            try
-            {
-                socket = new SocketMessageMng(port);
-                socket.UdpStartListen();
-                socket.SetTextEvent += Socket_SetTextEvent;
-                logger.Info("Udp初始化成功：{0}", port);
-            }
-            catch (Exception ex)
-            {
-                logger.Error("Udp异常：{0}", ex.ToString());
-            }
+            base.InitUdp(port, desc);
         }
-        public void Socket_SetTextEvent(string msg)
+        public override string Received(string msg)
         {
-            //msg = string.Format("{0}:收到信息：{1}", DateTime.Now.ToString(), msg);  
-            logger.Debug("Socket_SetTextEvent接收消息：{0}", msg);
             if (string.IsNullOrEmpty(msg) || msg.Length < 2)
             {
-                return;
+                return string.Empty;
             }
-            SendInfo(msg);
-
+            return msg;
         }
-        public void SendInfo(string msg)
+        public override void SendInfo(string msg)
         {
             try
             {
@@ -129,14 +112,8 @@ namespace SFBR_MsgForwardingService.Msg
             }
             catch (Exception ex)
             {
+                logger.Error(ex);
             }
-        }
-        /// <summary>
-        /// 释放资源
-        /// </summary>
-        public void Dis()
-        {
-            socket?.Dis();
         }
     }
 }
